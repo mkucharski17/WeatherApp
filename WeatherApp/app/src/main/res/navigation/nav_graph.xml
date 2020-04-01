@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.kucharski.michal.weatheracc.ui.fragment.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout = "@layout/main_fragment"
+        app:navGraph="@navigation/nav_graph">
+        <action
+            android:id="@+id/action_splashFragment_to_forecastListFragment"
+            app:destination="@id/forecastListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/forecastListFragment"
+        android:name="com.kucharski.michal.weatheracc.ui.fragment.ForecastListFragment"
+        android:label="ForecastListFragment"
+        tools:layout = "@layout/forecast_list_fragment"
+        app:navGraph="@navigation/nav_graph">
+        <action
+            android:id="@+id/action_forecastListFragment_to_temporaryFragment"
+            app:destination="@id/temporaryFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/forecastListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/temporaryFragment"
+        android:name="com.kucharski.michal.weatheracc.ui.fragment.TemporaryFragment"
+        android:label="fragment_temporary"
+        tools:layout="@layout/fragment_temporary" />
+
+</navigation>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WeatherAcc</string>
+    <string name="landing_text">Hello Weather</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="App_name">WEATHER APP</string>
+    <string name="addLocationText">To add your\nfirst location\n<b>click +</b></string>
+    <string name="textview">TextView</string>
+    <string name="degresSymbols"><b>°C /</b> °F</string>
+
+</resources>
