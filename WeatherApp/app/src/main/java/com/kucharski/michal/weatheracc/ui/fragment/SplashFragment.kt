@@ -7,30 +7,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.kucharski.michal.weatheracc.R
+import com.kucharski.michal.weatheracc.di.Injector
 import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
+    private val factory by lazy { Injector.provideFactory(context!!) }
+    private val viewModel by viewModels<SplashViewModel> { factory }
 
-    companion object {
-        fun newInstance() = SplashFragment()
-    }
-
-    private lateinit var viewModel: SplashViewModel
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        // TODO: Use the ViewModel
-        Handler().postDelayed({
+        lifecycleScope.launch {
+            delay(2500)
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToForecastListFragment())
-        },5000)
+        }
     }
 
 }
