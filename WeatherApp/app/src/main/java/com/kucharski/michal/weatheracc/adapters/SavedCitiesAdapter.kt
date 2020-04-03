@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SavedCitiesAdapter.SearchCitiesViewHolder
-import com.kucharski.michal.weatheracc.models.CityWeatherModel
+import com.kucharski.michal.weatheracc.models.WeatherForecast
 import kotlinx.android.synthetic.main.item_saved_city.view.*
 
 class SavedCitiesAdapter(
-    private val listener: (CityWeatherModel) -> Unit
-) : ListAdapter<CityWeatherModel, SearchCitiesViewHolder>(DIFF_CALLBACK) {
+    private val listener: (WeatherForecast) -> Unit
+) : ListAdapter<WeatherForecast, SearchCitiesViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         SearchCitiesViewHolder(
@@ -24,39 +24,40 @@ class SavedCitiesAdapter(
         holder.bind(getItem(position), listener)
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CityWeatherModel>() {
-            override fun areItemsTheSame(oldItem: CityWeatherModel, newItem: CityWeatherModel) =
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WeatherForecast>() {
+            override fun areItemsTheSame(oldItem: WeatherForecast, newItem: WeatherForecast) =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: CityWeatherModel, newItem: CityWeatherModel) =
+            override fun areContentsTheSame(oldItem: WeatherForecast, newItem: WeatherForecast) =
                 oldItem == newItem
         }
     }
 
 
     class SearchCitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(city: CityWeatherModel, listener: (CityWeatherModel) -> Unit) {
+        fun bind(city: WeatherForecast, listener: (WeatherForecast) -> Unit) {
             itemView.apply {
-                when (city.status) {
-                    "Sunny" -> {
-                        itemContainer.setBackgroundResource(R.drawable.sunny)
-                    }
-                    "Clouds" -> {
-                        itemContainer.setBackgroundResource(R.drawable.cloudy)
-                    }
-                    "Clear Sky" -> {
-                        itemContainer.setBackgroundResource(R.drawable.clear_sky)
-                    }
-                    "Foggy" -> {
-                        itemContainer.setBackgroundResource(R.drawable.foggy)
-                    }
-                    "Clear Night" -> {
-                        itemContainer.setBackgroundResource(R.drawable.clear_night)
-                    }
-                }
+//                when (city.status) {
+//                    "Sunny" -> {
+//                        itemContainer.setBackgroundResource(R.drawable.sunny)
+//                    }
+//                    "Clouds" -> {
+//                        itemContainer.setBackgroundResource(R.drawable.cloudy)
+//                    }
+//                    "Clear Sky" -> {
+//                        itemContainer.setBackgroundResource(R.drawable.clear_sky)
+//                    }
+//                    "Foggy" -> {
+//                        itemContainer.setBackgroundResource(R.drawable.foggy)
+//                    }
+//                    "Clear Night" -> {
+//                        itemContainer.setBackgroundResource(R.drawable.clear_night)
+//                    }
+//                }
+                itemContainer.setBackgroundResource(R.drawable.clear_night)
                 cityName.text = city.name
-                date.text = city.date
-                temperature.text = "${city.temperature} °C"
+                date.text = city.weather.firstOrNull()?.description
+                temperature.text = "${city.main.temp} °C"
                 setOnClickListener { listener(city) }
             }
         }

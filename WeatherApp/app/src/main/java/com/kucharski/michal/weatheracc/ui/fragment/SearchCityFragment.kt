@@ -11,13 +11,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SearchCityAdapter
 import com.kucharski.michal.weatheracc.models.SearchCityModel
+import com.kucharski.michal.weatheracc.viewModels.SearchViewModel
 import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
 
 
-class SearchCityFragment : Fragment() {
+class SearchCityFragment : DaggerFragment() {
 
-    private lateinit var viewModel: SplashViewModel
+    private lateinit var viewModel: SearchViewModel
     private val citiesAdapter by lazy{
         SearchCityAdapter{
             Toast.makeText(context,it.name,Toast.LENGTH_SHORT).show()
@@ -116,7 +118,7 @@ class SearchCityFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+        //viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
         // TODO: Use the ViewModel
 
     }
