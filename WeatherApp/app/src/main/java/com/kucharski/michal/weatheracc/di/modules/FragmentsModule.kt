@@ -1,6 +1,7 @@
 package com.kucharski.michal.weatheracc.di.modules
 
 import com.kucharski.michal.weatheracc.ui.fragment.ForecastListFragment
+import com.kucharski.michal.weatheracc.ui.fragment.SearchCityFragment
 import com.kucharski.michal.weatheracc.ui.fragment.SplashFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -12,4 +13,7 @@ internal abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     internal abstract fun forecastFragment(): ForecastListFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun searchCityFragment(): SearchCityFragment
 }

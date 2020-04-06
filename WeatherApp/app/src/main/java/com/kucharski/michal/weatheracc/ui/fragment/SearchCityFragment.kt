@@ -1,25 +1,22 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SearchCityAdapter
 import com.kucharski.michal.weatheracc.models.SearchCityModel
-import com.kucharski.michal.weatheracc.viewModels.SearchViewModel
-import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
+import com.kucharski.michal.weatheracc.viewModels.SearchCityViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
 
 
 class SearchCityFragment : DaggerFragment() {
 
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var cityViewModel: SearchCityViewModel
     private val citiesAdapter by lazy{
         SearchCityAdapter{
             Toast.makeText(context,it.name,Toast.LENGTH_SHORT).show()

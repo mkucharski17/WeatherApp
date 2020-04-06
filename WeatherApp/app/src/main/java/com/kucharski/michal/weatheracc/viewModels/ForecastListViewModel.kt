@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ForecastListViewModel @Inject constructor(repository: Repository) : ViewModel() {
-    private val tag = "ForecastListVViewModel"
+    private val tag = "ForecastListViewModel"
 
     val weatherList = MutableLiveData<List<WeatherForecast>>()
 

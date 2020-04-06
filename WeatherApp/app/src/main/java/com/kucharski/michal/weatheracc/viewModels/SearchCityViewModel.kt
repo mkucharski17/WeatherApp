@@ -4,6 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.kucharski.michal.weatheracc.repository.Repository
 import javax.inject.Inject
 
-class SearchViewModel  @Inject constructor(repository: Repository): ViewModel() {
+class SearchCityViewModel  @Inject constructor(repository: Repository): ViewModel() {
     // TODO: Implement the ViewModel
 }

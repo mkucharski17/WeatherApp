@@ -54,7 +54,7 @@ class SavedCitiesAdapter(
 //                        itemContainer.setBackgroundResource(R.drawable.clear_night)
 //                    }
 //                }
-                itemContainer.setBackgroundResource(R.drawable.clear_night)
+                itemContainer.setBackgroundResource(R.drawable.sunny)
                 cityName.text = city.name
                 date.text = city.weather.firstOrNull()?.description
                 temperature.text = "${city.main.temp} °C"

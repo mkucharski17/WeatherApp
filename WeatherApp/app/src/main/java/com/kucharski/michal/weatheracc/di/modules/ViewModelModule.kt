@@ -1,8 +1,8 @@
 package com.kucharski.michal.weatheracc.di.modules
 
 import androidx.lifecycle.ViewModel
-import com.kucharski.michal.weatheracc.models.SearchCityModel
 import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
+import com.kucharski.michal.weatheracc.viewModels.SearchCityViewModel
 import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -19,5 +19,12 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(key = SplashViewModel::class)
     abstract fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(key = SearchCityViewModel::class)
+    abstract fun bindSearchCityViewModel(viewModel: SearchCityViewModel): ViewModel
+
+
 
 }
