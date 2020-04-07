@@ -1,26 +1,29 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
-
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SearchCityAdapter
 import com.kucharski.michal.weatheracc.models.SearchCityModel
-import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
+import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
+import javax.inject.Inject
 
 
-class SearchCityFragment : Fragment() {
+class SearchCityFragment : DaggerFragment() {
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: SplashViewModel
-    private val citiesAdapter by lazy{
-        SearchCityAdapter{
-            Toast.makeText(context,it.name,Toast.LENGTH_SHORT).show()
+    private val viewModel by viewModels<ForecastListViewModel> { factory }
+    private val citiesAdapter by lazy {
+        SearchCityAdapter {
+            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
         }
     }
     private val citiesList = mutableListOf(
@@ -33,35 +36,35 @@ class SearchCityFragment : Fragment() {
             "2",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "3",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "4",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "5",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "6",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "7",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "8",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "9",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "10",
             "Warszawa",
             "Poland"
@@ -70,11 +73,11 @@ class SearchCityFragment : Fragment() {
             "11",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "12",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "13",
             "Warszawa",
             "Poland"
@@ -82,19 +85,19 @@ class SearchCityFragment : Fragment() {
             "14",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "15",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "16",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "17",
             "Warszawa",
             "Poland"
-        ),SearchCityModel(
+        ), SearchCityModel(
             "18",
             "Warszawa",
             "Poland"
@@ -103,11 +106,13 @@ class SearchCityFragment : Fragment() {
     )
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val rootView = inflater.inflate(R.layout.search_city_fragment, container, false)
 
-        rootView.rvSearch.adapter = citiesAdapter.apply{
+        rootView.rvSearch.adapter = citiesAdapter.apply {
             submitList(citiesList)
         }
 
@@ -116,7 +121,7 @@ class SearchCityFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+        //viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
         // TODO: Use the ViewModel
 
     }

@@ -7,9 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.kucharski.michal.weatheracc.models.WeatherForecast
 import com.kucharski.michal.weatheracc.repository.Repository
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
-class ForecastListViewModel(repository: Repository) : ViewModel() {
-    private val tag = "ForecastListVViewModel"
+class ForecastListViewModel @Inject constructor(repository: Repository) : ViewModel() {
+    private val tag = "ForecastListViewModel"
 
     val weatherList = MutableLiveData<List<WeatherForecast>>()
 

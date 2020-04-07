@@ -14,8 +14,11 @@ class ViewModelFactory (private val repository: Repository): ViewModelProvider.F
             SplashViewModel::class.java -> {
                 SplashViewModel(repository) as T
             }
+            SearchCityViewModel::class.java -> {
+                SplashViewModel(repository) as T
+            }
             else -> {
-                throw IllegalArgumentException("unkonwn model class $modelClass")
+                throw IllegalArgumentException("unknown model class $modelClass")
             }
 
         }
