@@ -32,6 +32,7 @@ class ForecastListFragment : DaggerFragment() {
     private val citiesAdapter by lazy {
         CitiesAdapter {
             Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment())
         }
     }
 

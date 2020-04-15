@@ -1,5 +1,6 @@
 package com.kucharski.michal.weatheracc.di.modules
 
+import com.kucharski.michal.weatheracc.ui.fragment.DetailsFragment
 import com.kucharski.michal.weatheracc.ui.fragment.ForecastListFragment
 import com.kucharski.michal.weatheracc.ui.fragment.SearchCityFragment
 import com.kucharski.michal.weatheracc.ui.fragment.SplashFragment
@@ -16,4 +17,7 @@ internal abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     internal abstract fun bindSearchCityFragment(): SearchCityFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun bindDetailsFragment(): DetailsFragment
 }
