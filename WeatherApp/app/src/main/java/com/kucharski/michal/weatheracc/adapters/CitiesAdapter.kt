@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.models.WeatherForecast
-import kotlinx.android.synthetic.main.item_search_city.view.*
+import kotlinx.android.synthetic.main.item_saved_city.view.*
 
-class SearchCityAdapter(
+class CitiesAdapter(
     private val listener: (WeatherForecast) -> Unit
-) : ListAdapter<WeatherForecast, SearchCityAdapter.CitySearchViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<WeatherForecast, CitiesAdapter.CitiesViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        CitySearchViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_search_city, parent, false)
+        CitiesViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_saved_city, parent, false)
         )
 
-    override fun onBindViewHolder(holder: CitySearchViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) =
         holder.bind(getItem(position), listener)
 
     companion object {
@@ -32,10 +32,13 @@ class SearchCityAdapter(
         }
     }
 
-    class CitySearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(city: WeatherForecast, listener: (WeatherForecast) -> Unit) {
             itemView.apply {
-                tvTitle.text = "${city.name}, ${city.sys.country}"
+                itemContainer.setBackgroundResource(R.drawable.sunny)
+                tvCityName.text = city.name
+                tvDate.text = city.weather.firstOrNull()?.description
+                tvTemperature.text = "${city.main.temp} °C"
                 setOnClickListener { listener(city) }
             }
         }

@@ -9,11 +9,11 @@ import dagger.android.ContributesAndroidInjector
 @Module
 internal abstract class FragmentsModule {
     @ContributesAndroidInjector
-    internal abstract fun splashFragment(): SplashFragment
+    internal abstract fun bindSplashFragment(): SplashFragment
 
     @ContributesAndroidInjector
-    internal abstract fun forecastFragment(): ForecastListFragment
+    internal abstract fun bindForecastFragment(): ForecastListFragment
 
     @ContributesAndroidInjector
-    internal abstract fun searchCityFragment(): SearchCityFragment
+    internal abstract fun bindSearchCityFragment(): SearchCityFragment
 }

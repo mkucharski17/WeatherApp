@@ -1,6 +1,6 @@
 package com.kucharski.michal.weatheracc.models
 
-data class CityWeatherModel (
+data class CityModel(
     val id: String,
     val name: String,
     val date: String = "19.03.2020",

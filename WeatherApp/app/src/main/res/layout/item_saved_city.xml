@@ -9,7 +9,7 @@
 
     <TextView
 
-        android:id="@+id/cityName"
+        android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -19,7 +19,7 @@
         tools:text="Adelaide" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -30,11 +30,11 @@
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityName"
+        app:layout_constraintTop_toBottomOf="@+id/tvCityName"
         tools:text="26 June, 2018" />
 
     <TextView
-        android:id="@+id/temperature"
+        android:id="@+id/tvTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate"
         tools:text="36°" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

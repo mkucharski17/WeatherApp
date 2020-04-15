@@ -5,36 +5,28 @@
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/splashFragment">
 
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.kucharski.michal.weatheracc.ui.fragment.SplashFragment"
         android:label="SplashFragment"
-        tools:layout = "@layout/main_fragment"
-        app:navGraph="@navigation/nav_graph">
+        tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_splashFragment_to_forecastListFragment"
-            app:destination="@id/forecastListFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
-
+            app:destination="@id/forecastListFragment" />
     </fragment>
     <fragment
         android:id="@+id/forecastListFragment"
         android:name="com.kucharski.michal.weatheracc.ui.fragment.ForecastListFragment"
         android:label="ForecastListFragment"
-        tools:layout = "@layout/forecast_list_fragment"
-        app:navGraph="@navigation/nav_graph">
+        tools:layout="@layout/forecast_list_fragment">
         <action
-            android:id="@+id/action_forecastListFragment_to_temporaryFragment"
-            app:destination="@id/temporaryFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit"
-            app:popUpTo="@id/forecastListFragment" />
+            android:id="@+id/action_forecastListFragment_to_searchCityFragment"
+            app:destination="@id/searchCityFragment" />
     </fragment>
     <fragment
-        android:id="@+id/temporaryFragment"
+        android:id="@+id/searchCityFragment"
         android:name="com.kucharski.michal.weatheracc.ui.fragment.SearchCityFragment"
-        android:label="fragment_temporary"
-        tools:layout="@layout/search_city_fragment" />
-
+        android:label="SearchCityFragment"
+        tools:layout="@layout/search_city_fragment"/>
 </navigation>
