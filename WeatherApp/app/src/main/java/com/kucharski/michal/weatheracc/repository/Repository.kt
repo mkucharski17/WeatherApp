@@ -18,16 +18,14 @@ class Repository(
         cityIdList: List<Long>,
         units: Units = Units.METRIC
     ) = openWeatherService.getWeatherByCityIdList(
-            cityIdList.fold("", { acc: String, cityId: Long ->
-                "$acc$cityId"
-            }), units.name.toLowerCase()
-        ).also { weatherForecastDao.insert(it.list) }
+        cityIdList.fold("", { acc: String, cityId: Long -> "$acc$cityId," }),
+        units.name.toLowerCase()
+    ).also { weatherForecastDao.insert(it.list) }
 
     suspend fun findCityByName(
         cityName: String,
         units: Units = Units.METRIC
     ) = openWeatherService.findCityWeatherByName(cityName, units.name.toLowerCase())
 
-    suspend fun storeCity(weatherForecast: WeatherForecast) =
-        weatherForecastDao.insert(weatherForecast)
+    suspend fun storeCity(weatherForecast: WeatherForecast) = weatherForecastDao.insert(weatherForecast)
 }

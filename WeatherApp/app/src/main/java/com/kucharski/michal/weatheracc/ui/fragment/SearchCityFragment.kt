@@ -16,32 +16,29 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
 import javax.inject.Inject
 
-
 class SearchCityFragment : DaggerFragment() {
+
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private val viewModel by viewModels<SearchCityViewModel> { factory }
 
-    private val searchCityAdapter by lazy {
+    private val searchListAdapter by lazy {
         SearchCityAdapter {
             viewModel.storeCity(it)
             findNavController().popBackStack()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.search_city_fragment, container, false)
             .apply {
                 btnConfirm.setOnClickListener { viewModel.searchCity(etSearch.text.toString()) }
-                rvCitySearch.adapter = searchCityAdapter
+                rvCitySearch.adapter = searchListAdapter
 
                 with(viewModel) {
                     cityList.observe(viewLifecycleOwner, Observer {
                         if (it.isNotEmpty()) {
-                            searchCityAdapter.submitList(it)
+                            searchListAdapter.submitList(it)
                             handleVisibility(textView, rvCitySearch, false)
                         } else {
                             textView.text = "List is empty"
@@ -56,14 +53,8 @@ class SearchCityFragment : DaggerFragment() {
             }
     }
 
-    private fun handleVisibility(
-        textView: View,
-        recyclerView: RecyclerView,
-        shouldShowError: Boolean
-    ) {
+    private fun handleVisibility(textView: View, recyclerView: RecyclerView, shouldShowError: Boolean) {
         textView.visibility = if (shouldShowError) View.VISIBLE else View.GONE
         recyclerView.visibility = if (shouldShowError) View.GONE else View.VISIBLE
     }
-
-
 }

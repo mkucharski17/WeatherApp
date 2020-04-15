@@ -19,6 +19,7 @@ class ForecastListViewModel @Inject constructor(
     private val repository: Repository,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
+
     private val tag = "ForecastListViewModel"
 
     val weatherList = MutableLiveData<List<WeatherForecast>>()
@@ -47,14 +48,13 @@ class ForecastListViewModel @Inject constructor(
         val currentUnits = sharedPreferences.getUnits()
         val newUnits = if (currentUnits == Units.METRIC) Units.IMPERIAL
         else Units.METRIC
-
         viewModelScope.launch {
             repository.getWeatherList().map { it.id }.let {
-                try{
-                    repository.fetchWeatherByCityIdList(it,newUnits)
+                try {
+                    repository.fetchWeatherByCityIdList(it, newUnits)
                     sharedPreferences.setUnits(newUnits)
                     units.postValue(newUnits)
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }

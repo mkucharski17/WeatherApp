@@ -10,15 +10,16 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class SearchCityViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+
     val cityList = MutableLiveData<List<WeatherForecast>>()
     val errorMessage = MutableLiveData<String>()
 
-    fun searchCity(cityName: String){
+    fun searchCity(cityName: String) {
         viewModelScope.launch {
             try {
                 val result = repository.findCityByName(cityName)
                 cityList.postValue(result.list)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 errorMessage.postValue(e.toString())
             }

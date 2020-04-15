@@ -35,6 +35,5 @@ class SplashViewModel @Inject constructor(
             animationDone.await() && fetchDone.await()
             proceed.postValue(true)
         }
-
     }
 }
