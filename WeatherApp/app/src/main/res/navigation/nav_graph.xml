@@ -13,7 +13,8 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_splashFragment_to_forecastListFragment"
-            app:destination="@id/forecastListFragment" />
+            app:destination="@id/forecastListFragment"
+            app:popUpTo="@id/splashFragment" />
     </fragment>
     <fragment
         android:id="@+id/forecastListFragment"

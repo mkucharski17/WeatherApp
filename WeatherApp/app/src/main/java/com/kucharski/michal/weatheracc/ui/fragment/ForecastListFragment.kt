@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.addCallback
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +24,9 @@ import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.forecast_list_fragment.view.*
 import kotlinx.android.synthetic.main.search_city_fragment.*
+import kotlinx.android.synthetic.main.search_city_fragment.rvCitySearch
+import kotlinx.android.synthetic.main.search_city_fragment.textView
+import kotlinx.android.synthetic.main.search_city_fragment.view.*
 import javax.inject.Inject
 
 
@@ -39,11 +45,16 @@ class ForecastListFragment : DaggerFragment() {
         }
     }
 
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.forecast_list_fragment, container, false).apply {
+           requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {}
+
             textSwitcher.setOnClickListener {
                 viewModel.updateUnits()
             }
@@ -58,8 +69,12 @@ class ForecastListFragment : DaggerFragment() {
             with(viewModel) {
 
                 weatherList.observe(viewLifecycleOwner, Observer {
-                    citiesAdapter.submitList(it)
-                    handleVisibility(forecastListBackgroundLayout,it)
+                    if (it.isNotEmpty()) {
+                        citiesAdapter.submitList(it)
+                        forecastListBackgroundLayout.visibility = View.GONE
+                    }
+                    else forecastListBackgroundLayout.visibility = View.VISIBLE
+
 
                 })
                 units.observe(viewLifecycleOwner, Observer {
@@ -69,7 +84,4 @@ class ForecastListFragment : DaggerFragment() {
         }
     }
 
-    private fun handleVisibility(layout: View, weatherList: List<WeatherForecast>) {
-        layout.visibility = if(weatherList.isEmpty()) View.VISIBLE else View.GONE
-    }
 }
