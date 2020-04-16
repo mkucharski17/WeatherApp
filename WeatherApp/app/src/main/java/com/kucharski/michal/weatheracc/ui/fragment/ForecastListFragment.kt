@@ -1,6 +1,7 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
 import android.os.Bundle
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.CitiesAdapter
 import com.kucharski.michal.weatheracc.models.Units
+import com.kucharski.michal.weatheracc.models.WeatherForecast
 import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.forecast_list_fragment.view.*
@@ -44,6 +47,7 @@ class ForecastListFragment : DaggerFragment() {
             textSwitcher.setOnClickListener {
                 viewModel.updateUnits()
             }
+
             rvCities.adapter = citiesAdapter
             addButton.setOnClickListener {
                 findNavController().navigate(
@@ -52,13 +56,20 @@ class ForecastListFragment : DaggerFragment() {
             }
 
             with(viewModel) {
+
                 weatherList.observe(viewLifecycleOwner, Observer {
                     citiesAdapter.submitList(it)
+                    handleVisibility(forecastListBackgroundLayout,it)
+
                 })
                 units.observe(viewLifecycleOwner, Observer {
                     textSwitcher.setText(getString(if (it == Units.METRIC) R.string.units_metric else R.string.units_imperial))
                 })
             }
         }
+    }
+
+    private fun handleVisibility(layout: View, weatherList: List<WeatherForecast>) {
+        layout.visibility = if(weatherList.isEmpty()) View.VISIBLE else View.GONE
     }
 }

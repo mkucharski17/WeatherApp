@@ -8,11 +8,13 @@
     android:id="@+id/itemContainer">
 
     <TextView
-
         android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,31 +24,24 @@
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="sans-serif"
-        android:gravity="center_horizontal"
-        android:lineSpacingExtra="12sp"
-        android:textSize="12sp"
-        android:textStyle="normal"
+        android:layout_marginTop="10dp"
+        tools:text="25/03/2019"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityName"
-        tools:text="26 June, 2018" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCityName" />
 
     <TextView
         android:id="@+id/tvTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:gravity="end"
-        android:letterSpacing="-0.03"
-        android:lineSpacingExtra="10.7sp"
-        android:textSize="21.3sp"
-        android:textStyle="normal"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@android:color/black"
+        android:textSize="21sp"
+        tools:text="24 C"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        tools:text="36°" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
