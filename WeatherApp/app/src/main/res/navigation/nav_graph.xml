@@ -26,7 +26,11 @@
             app:destination="@id/searchCityFragment" />
         <action
             android:id="@+id/action_forecastListFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            app:destination="@id/detailsFragment" >
+            <argument
+                android:name="cItyId"
+                android:defaultValue="null" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/searchCityFragment"
@@ -37,5 +41,9 @@
         android:id="@+id/detailsFragment"
         android:name="com.kucharski.michal.weatheracc.ui.fragment.DetailsFragment"
         android:label="details_fragment"
-        tools:layout="@layout/details_fragment" />
+        tools:layout="@layout/details_fragment" >
+        <argument
+            android:name="cityId"
+            app:argType="long" />
+    </fragment>
 </navigation>

@@ -24,8 +24,7 @@ import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.forecast_list_fragment.view.*
 import kotlinx.android.synthetic.main.search_city_fragment.*
-import kotlinx.android.synthetic.main.search_city_fragment.rvCitySearch
-import kotlinx.android.synthetic.main.search_city_fragment.textView
+
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
 import javax.inject.Inject
 
@@ -40,8 +39,7 @@ class ForecastListFragment : DaggerFragment() {
 
     private val citiesAdapter by lazy {
         CitiesAdapter {
-            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
-            findNavController().navigate(ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment())
+            findNavController().navigate(ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment(it.id))
         }
     }
 

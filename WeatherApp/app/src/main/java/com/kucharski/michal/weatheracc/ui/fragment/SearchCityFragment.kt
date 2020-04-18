@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,22 +34,40 @@ class SearchCityFragment : DaggerFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.search_city_fragment, container, false)
             .apply {
-                btnConfirm.setOnClickListener { viewModel.searchCity(etSearch.text.toString()) }
+                searchView.setOnQueryTextListener((object : SearchView.OnQueryTextListener {
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if(searchView.query.length <= 3 )
+                            tvEmptyList.text = "Type minimum 3 characters"
+                        viewModel.searchCity(searchView.query.toString())
+
+                        return false
+                    }
+
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        onQueryTextChange(query)
+                        return false
+                    }
+                })
+                )
+
                 rvCitySearch.adapter = searchListAdapter
 
                 with(viewModel) {
                     cityList.observe(viewLifecycleOwner, Observer {
                         if (it.isNotEmpty()) {
                             searchListAdapter.submitList(it)
-                            handleVisibility(textView, rvCitySearch, false)
+                            handleVisibility(tvEmptyList, rvCitySearch, false)
                         } else {
-                            textView.text = "List is empty"
-                            handleVisibility(textView, rvCitySearch, true)
+                            tvEmptyList.text = "List is empty"
+                            handleVisibility(tvEmptyList, rvCitySearch, true)
                         }
                     })
                     errorMessage.observe(viewLifecycleOwner, Observer {
-                        textView.text = it
-                        handleVisibility(textView, rvCitySearch, true)
+                        if (searchView.query.length >=3) {
+                            tvEmptyList.text = it
+                            handleVisibility(tvEmptyList, rvCitySearch, true)
+                        }
                     })
                 }
             }

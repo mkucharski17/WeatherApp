@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kucharski.michal.weatheracc.models.WeatherForecast
+import com.kucharski.michal.weatheracc.models.WeatherForecastFor5Days
 
 @Database(entities = [WeatherForecast::class], version = 1)
 @TypeConverters(RoomTypeConverters::class)

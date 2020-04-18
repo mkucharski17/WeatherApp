@@ -10,5 +10,6 @@
     <string name="city_name">City name</string>
     <string name="units_metric" translatable="false"><b>°C! /</b> °F</string>
     <string name="units_imperial" translatable="false">°C <b>/ °F!</b></string>
+    <string name="type_minimum_3_characters">Type minimum 3 characters</string>
 
 </resources>

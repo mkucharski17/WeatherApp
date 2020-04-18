@@ -27,6 +27,11 @@ class Repository(
         units: Units = Units.METRIC
     ) = openWeatherService.findCityWeatherByName(cityName, units.name.toLowerCase())
 
+    suspend fun fetchWeatherFor5DaysByCityId(
+        cityId: Long,
+        units: Units = Units.METRIC
+    ) = openWeatherService.findCityWeatherFor5DaysById(cityId,units.name.toLowerCase())
+
 
     suspend fun storeCity(weatherForecast: WeatherForecast) = weatherForecastDao.insert(weatherForecast)
 }

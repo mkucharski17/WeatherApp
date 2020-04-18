@@ -35,7 +35,13 @@ class CitiesAdapter(
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(city: WeatherForecast, listener: (WeatherForecast) -> Unit) {
             itemView.apply {
-                itemContainer.setBackgroundResource(R.drawable.sunny)
+                when(city.weather.firstOrNull()?.description){
+                    "clear sky" -> itemContainer.setBackgroundResource(R.drawable.sunny)
+                    "few clouds" -> itemContainer.setBackgroundResource(R.drawable.clear_sky)
+                    "scattered clouds" -> itemContainer.setBackgroundResource(R.drawable.cloudy)
+                    "mist" -> itemContainer.setBackgroundResource(R.drawable.foggy)
+                    else -> itemContainer.setBackgroundResource(R.drawable.clear_sky)
+                }
                 tvCityName.text = city.name
                 tvDate.text = city.weather.firstOrNull()?.description
                 tvTemperature.text = "${city.main.temp} °C"
