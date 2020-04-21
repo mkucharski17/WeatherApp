@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="4sp"
                 android:textColor="#ffffff"
@@ -120,9 +120,11 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvToday"
+                app:layout_constraintBottom_toBottomOf="@id/ivBackground"
                 tools:itemCount="6"
                 tools:listitem="@layout/item_daily_forecast" />
 
@@ -137,6 +139,26 @@
                 app:layout_constraintTop_toBottomOf="@id/rvWeeklyForecast"
                 tools:itemCount="7"
                 tools:listitem="@layout/item_hour_forecast" />
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvHourlyForecast"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_details_row" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

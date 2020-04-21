@@ -33,7 +33,6 @@ class ForecastListFragment : DaggerFragment() {
                     it.id,
                     it.weather.firstOrNull()?.description,
                     it.main.temp.toInt()
-
                 )
             )
         }

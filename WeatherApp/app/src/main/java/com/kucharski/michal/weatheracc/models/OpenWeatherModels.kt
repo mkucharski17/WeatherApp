@@ -83,6 +83,7 @@ data class FindCityWeatherResponse(
     @SerializedName("list") val list: List<WeatherForecast>
 )
 
+
 enum class Units {
     METRIC,
     IMPERIAL

@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.models.WeatherForecast
 import kotlinx.android.synthetic.main.item_saved_city.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CitiesAdapter(
     private val listener: (WeatherForecast) -> Unit
@@ -35,18 +37,31 @@ class CitiesAdapter(
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(city: WeatherForecast, listener: (WeatherForecast) -> Unit) {
             itemView.apply {
-                when(city.weather.firstOrNull()?.description){
-                    "clear sky" -> itemContainer.setBackgroundResource(R.drawable.sunny)
-                    "few clouds" -> itemContainer.setBackgroundResource(R.drawable.clear_sky)
-                    "scattered clouds" -> itemContainer.setBackgroundResource(R.drawable.cloudy)
-                    "mist" -> itemContainer.setBackgroundResource(R.drawable.foggy)
-                    else -> itemContainer.setBackgroundResource(R.drawable.clear_sky)
+                when(city.weather.firstOrNull()?.description) {
+                    "clear sky" -> {
+                        itemContainer.setBackgroundResource(R.drawable.sunny)
+                        icWeather.setImageResource(R.drawable.ic_orange_sun)
+                    }
+                    "few clouds" -> {
+                        itemContainer.setBackgroundResource(R.drawable.clear_sky)
+                        icWeather.setImageResource(R.drawable.ic_sun)
+                    }
+                    "mist" -> {
+                        itemContainer.setBackgroundResource(R.drawable.foggy)
+                        icWeather.setImageResource(R.drawable.ic_fog)
+                    }
+                    else -> {
+                        itemContainer.setBackgroundResource(R.drawable.cloudy)
+                        icWeather.setImageResource(R.drawable.ic_sun_cloud)
+                    }
                 }
                 tvCityName.text = city.name
-                tvDate.text = city.weather.firstOrNull()?.description
-                tvTemperature.text = "${city.main.temp.toInt()}°"
+                tvDate.text = formatDate(city.dt)
+                tvMaxMinTemp.text = "${city.main.temp_max.toInt()}°" + " / " + "${city.main.temp_min.toInt()}°"
                 setOnClickListener { listener(city) }
             }
         }
+
+        private fun formatDate(timeSTamp: Int): String = SimpleDateFormat("dd MMM, YYYY  ").format(Date(timeSTamp.toLong()*1000))
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.kucharski.michal.weatheracc.R
+import com.kucharski.michal.weatheracc.adapters.DetailsAdapter
 import com.kucharski.michal.weatheracc.adapters.HourlyWeatherAdapter
 import com.kucharski.michal.weatheracc.adapters.WeeklyWeatherAdapter
 import com.kucharski.michal.weatheracc.viewModels.DetailsViewModel
@@ -35,20 +36,26 @@ class DetailsFragment : DaggerFragment() {
         HourlyWeatherAdapter{}
     }
 
+    private val detailsAdapter by lazy {
+        DetailsAdapter{}
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.details_fragment, container, false).apply {
             tvTemperature.text = args.currentTemperature.toString() + "°"
-            tvDescription.text = createDescription()
+
             rvWeeklyForecast.adapter = weeklyWeatherAdapter
             rvHourlyForecast.adapter = hourlyWeatherAdapter
+            rvDetails.adapter = detailsAdapter
             with(viewModel) {
                 searchCity(args.cityId)
                 hourlyWeatherForecast.observe(viewLifecycleOwner, Observer {
                     tvTime.text = getCurrentTime(it.city.timezone)
                     tvCityName.text = it.city.name + ", " + it.city.country
+                    tvDescription.text = createDescription(it.list[0].main.temp_max, it.list[0].main.temp_min)
 
                 })
                 dailyList.observe(viewLifecycleOwner, Observer {
@@ -58,17 +65,21 @@ class DetailsFragment : DaggerFragment() {
                 dayHourlyForecast.observe(viewLifecycleOwner, Observer {
                     hourlyWeatherAdapter.submitList(it)
                 })
+
+                detailsList.observe(viewLifecycleOwner, Observer {
+                    detailsAdapter.submitList(it)
+                })
             }
         }
     }
 
-    private fun createDescription(): String {
+    private fun createDescription(tempMax: Double, tempMin: Double): String {
         var prefix = ""
         if (args.currentWeatherDescription != null) prefix =
             args.currentWeatherDescription + " currently."
 
-        return prefix.capitalize() + " The high will be " +  "°. " +
-                "Tonight with a low of "  + "°. "
+        return prefix.capitalize() + " The high will be " + tempMax.toInt() + "°. " +
+                "The low will be" +  tempMin.toInt() + "°. "
     }
 
     private fun getCurrentTime(timeZone: Int): String {

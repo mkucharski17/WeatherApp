@@ -29,7 +29,6 @@ data class WeatherHourForecast (
     @SerializedName("weather") val weather : List<Weather>,
     @SerializedName("clouds") val clouds : Clouds,
     @SerializedName("wind") val wind : Wind,
-    @SerializedName("rain") val rain : Rain,
     @SerializedName("sys") val sys : WeatherFor5DaysSys,
     @SerializedName("dt_txt") val dt_txt : String
 )

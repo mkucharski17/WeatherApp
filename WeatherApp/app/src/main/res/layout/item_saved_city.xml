@@ -2,46 +2,67 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="173dp"
-    android:layout_height="156dp"
+    android:layout_width="157dp"
+    android:layout_height="149dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/itemContainer">
+    android:id="@+id/itemContainer"
+    android:background="@drawable/sunny"
+    android:layout_marginStart="20dp">
+
+    <ImageView
+        android:id="@+id/icWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="17dp"
+        android:src="@drawable/ic_orange_sun"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
     <TextView
         android:id="@+id/tvCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-medium"
-        android:textColor="@android:color/black"
+        android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icWeather"
         tools:text="Adelaide" />
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        tools:text="25/03/2019"
-        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:lineSpacingExtra="12sp"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCityName" />
+        app:layout_constraintTop_toBottomOf="@id/tvCityName"
+        tools:text="26 June, 2018"
+        />
 
     <TextView
-        android:id="@+id/tvTemperature"
+        android:id="@+id/tvMaxMinTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        android:textSize="21.3sp"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal"
+        android:textColor="#ffffff"
+        android:letterSpacing="-0.03"
+        android:lineSpacingExtra="10.7sp"
+        android:gravity="end"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@android:color/black"
-        android:textSize="21sp"
-        tools:text="24 C"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+        tools:text="36° / 27°"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
