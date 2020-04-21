@@ -7,7 +7,7 @@ data class WeatherForecastFor5Days(
     @SerializedName("cod") val cod : Int,
     @SerializedName("message") val message : Int,
     @SerializedName("cnt") val cnt : Int,
-    @SerializedName("list") val list : List<WeatherHourlyForecast>,
+    @SerializedName("list") val list : List<WeatherHourForecast>,
     @SerializedName("city") val city : City
 )
 
@@ -22,7 +22,7 @@ data class City (
     @SerializedName("sunset") val sunset : Int
 )
 
-data class WeatherHourlyForecast (
+data class WeatherHourForecast (
 
     @SerializedName("dt") val dt : Int,
     @SerializedName("main") val main : WeatherFor5DaysMain,

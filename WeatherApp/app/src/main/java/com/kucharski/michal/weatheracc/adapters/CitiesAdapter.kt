@@ -44,7 +44,7 @@ class CitiesAdapter(
                 }
                 tvCityName.text = city.name
                 tvDate.text = city.weather.firstOrNull()?.description
-                tvTemperature.text = "${city.main.temp} °C"
+                tvTemperature.text = "${city.main.temp.toInt()}°"
                 setOnClickListener { listener(city) }
             }
         }

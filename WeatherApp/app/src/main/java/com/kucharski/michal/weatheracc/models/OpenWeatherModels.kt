@@ -1,12 +1,15 @@
 package com.kucharski.michal.weatheracc.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "weather_forecast")
+
 data class WeatherForecast(
     @Embedded
     @SerializedName("coord") val coord: Coord,
@@ -48,6 +51,7 @@ data class Sys(
     @SerializedName("sunrise") val sunrise: Int,
     @SerializedName("sunset") val sunset: Int
 )
+
 
 data class Main(
     @SerializedName("temp") val temp: Double,

@@ -1,11 +1,13 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import androidx.core.widget.addTextChangedListener
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,25 +33,35 @@ class SearchCityFragment : DaggerFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.search_city_fragment, container, false)
             .apply {
-                searchView.setOnQueryTextListener((object : SearchView.OnQueryTextListener {
-
-                    override fun onQueryTextChange(newText: String): Boolean {
-                        if(searchView.query.length <= 3 )
-                            tvEmptyList.text = "Type minimum 3 characters"
-                        viewModel.searchCity(searchView.query.toString())
-
-                        return false
+                ivBackArrow.setOnClickListener {
+                    findNavController().popBackStack()
+                }
+                svSearchCity.let {
+                    it.setOnClickListener {
+                        svSearchCity.isIconified = false
                     }
+                    it.setOnQueryTextListener((object : SearchView.OnQueryTextListener {
 
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        onQueryTextChange(query)
-                        return false
-                    }
-                })
-                )
+                        override fun onQueryTextChange(newText: String): Boolean {
+                            if (svSearchCity.query.length <= 3)
+                                tvEmptyList.text = "Type minimum 3 characters"
+                            viewModel.searchCity(svSearchCity.query.toString())
+                            return false
+                        }
+
+                        override fun onQueryTextSubmit(query: String): Boolean {
+                            onQueryTextChange(query)
+                            return false
+                        }
+                    }))
+                }
 
                 rvCitySearch.adapter = searchListAdapter
 
@@ -59,12 +71,12 @@ class SearchCityFragment : DaggerFragment() {
                             searchListAdapter.submitList(it)
                             handleVisibility(tvEmptyList, rvCitySearch, false)
                         } else {
-                            tvEmptyList.text = "List is empty"
+                            tvEmptyList.text = "No found"
                             handleVisibility(tvEmptyList, rvCitySearch, true)
                         }
                     })
                     errorMessage.observe(viewLifecycleOwner, Observer {
-                        if (searchView.query.length >=3) {
+                        if (svSearchCity.query.length >= 3) {
                             tvEmptyList.text = it
                             handleVisibility(tvEmptyList, rvCitySearch, true)
                         }
@@ -73,8 +85,13 @@ class SearchCityFragment : DaggerFragment() {
             }
     }
 
-    private fun handleVisibility(textView: View, recyclerView: RecyclerView, shouldShowError: Boolean) {
+    private fun handleVisibility(
+        textView: View,
+        recyclerView: RecyclerView,
+        shouldShowError: Boolean
+    ) {
         textView.visibility = if (shouldShowError) View.VISIBLE else View.GONE
         recyclerView.visibility = if (shouldShowError) View.GONE else View.VISIBLE
     }
+
 }
