@@ -4,7 +4,7 @@
     android:layout_width="96dp"
     android:layout_height="128dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/radius_rectangle"
+    android:background="@drawable/radius_white_blur_rectangle"
     android:layout_marginStart="10dp">
 
     <TextView

@@ -40,7 +40,6 @@ class HourlyWeatherAdapter (private val listener: (WeatherHourForecast) -> Unit
                 tvHour.text = SimpleDateFormat("HH:mm").format(Date(forecast.dt.toLong()*1000))
                 tvDescription.text = forecast.weather.firstOrNull()?.description
                 tvHourTemperature.text = forecast.main.temp.toInt().toString() + "°"
-                setOnClickListener{listener}
             }
         }
     }

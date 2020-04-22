@@ -39,7 +39,7 @@ class DetailsAdapter (private val listener: (Pair<String,String>) -> Unit
             itemView.apply {
                 tvDetail.text = detail.first
                 tvDetailValue.text = detail.second
-                setOnClickListener{listener}
+                setOnClickListener{listener(detail)}
             }
         }
     }

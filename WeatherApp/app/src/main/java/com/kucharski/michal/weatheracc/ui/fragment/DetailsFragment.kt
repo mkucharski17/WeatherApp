@@ -1,9 +1,12 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.forEach
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,13 +15,19 @@ import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.DetailsAdapter
 import com.kucharski.michal.weatheracc.adapters.HourlyWeatherAdapter
 import com.kucharski.michal.weatheracc.adapters.WeeklyWeatherAdapter
+import com.kucharski.michal.weatheracc.models.WeatherHourForecast
 import com.kucharski.michal.weatheracc.viewModels.DetailsViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.details_fragment.view.*
+import kotlinx.android.synthetic.main.details_fragment.view.rvWeeklyForecast
+import kotlinx.android.synthetic.main.details_fragment.view.tvTemperature
+import kotlinx.android.synthetic.main.item_daily_forecast.view.*
 import java.text.SimpleDateFormat
 
 import java.util.*
 import javax.inject.Inject
+
 
 class DetailsFragment : DaggerFragment() {
 
@@ -30,10 +39,20 @@ class DetailsFragment : DaggerFragment() {
     private val viewModel by viewModels<DetailsViewModel> { factory }
 
     private val weeklyWeatherAdapter by lazy {
-        WeeklyWeatherAdapter{}
+        WeeklyWeatherAdapter{ weatherHourForecast: WeatherHourForecast, view: View ->
+
+            rvWeeklyForecast.forEach {
+                it.setBackgroundResource(R.drawable.radius_white_blur_rectangle)
+            }
+            view.setBackgroundResource(R.drawable.radius_white_rectangle)
+            viewModel.updateDetailList(weatherHourForecast)
+            viewModel.updateHourlyAndDetails(view.tvDayOfWeek.text.toString())
+
+        }
     }
     private val hourlyWeatherAdapter by lazy {
-        HourlyWeatherAdapter{}
+        HourlyWeatherAdapter{
+        }
     }
 
     private val detailsAdapter by lazy {

@@ -21,8 +21,7 @@ class CitiesAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.item_saved_city, parent, false)
         )
 
-    override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) =
-        holder.bind(getItem(position), listener)
+    override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) = holder.bind(getItem(position), listener)
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<WeatherForecast>() {

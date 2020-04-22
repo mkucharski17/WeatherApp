@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.models.WeatherHourForecast
 import kotlinx.android.synthetic.main.item_daily_forecast.view.*
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class WeeklyWeatherAdapter (private val listener: (WeatherHourForecast) -> Unit
+class WeeklyWeatherAdapter (private val listener: (WeatherHourForecast,View) -> Unit
 ) : ListAdapter<WeatherHourForecast, WeeklyWeatherAdapter.WeeklyWeatherViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -35,8 +36,10 @@ class WeeklyWeatherAdapter (private val listener: (WeatherHourForecast) -> Unit
     }
 
     class WeeklyWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(forecast: WeatherHourForecast, listener: (WeatherHourForecast) -> Unit) {
+        fun bind(forecast: WeatherHourForecast, listener: (WeatherHourForecast,View) -> Unit) {
             itemView.apply {
+                if(getDayOFWeek(forecast.dt) == getDayOFWeek((Date().time/1000).toInt()))
+                    itemView.setBackgroundResource(R.drawable.radius_white_rectangle)
 
                 forecast.weather.firstOrNull()?.let{
                     when(it.icon){
@@ -50,10 +53,12 @@ class WeeklyWeatherAdapter (private val listener: (WeatherHourForecast) -> Unit
                     }
                     tvDayOfWeek.text = SimpleDateFormat("EEE").format(Date(forecast.dt.toLong()*1000))
                     tvTemperature.text = forecast.main.temp.toInt().toString() + "°"
-                    setOnClickListener { listener(forecast) }
+                    setOnClickListener { listener(forecast,itemView) }
                 }
             }
         }
+
+        private fun getDayOFWeek(timestamp: Int) = SimpleDateFormat("EEE").format(Date(timestamp.toLong()*1000))
     }
 
 }

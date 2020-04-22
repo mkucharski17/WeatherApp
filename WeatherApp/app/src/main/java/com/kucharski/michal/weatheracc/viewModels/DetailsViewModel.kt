@@ -2,6 +2,7 @@ package com.kucharski.michal.weatheracc.viewModels
 
 import android.content.SharedPreferences
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,16 +31,19 @@ class DetailsViewModel @Inject constructor(
     fun searchCity(cityId: Long) {
         viewModelScope.launch {
             try {
-                val result = repository.
-                fetchWeatherFor5DaysByCityId(cityId,sharedPreferences.getUnits())
+                val result = repository.fetchWeatherFor5DaysByCityId(cityId,sharedPreferences.getUnits())
                 generateDailyList(result)
-                generateDetailList(result)
-                dayHourlyForecast.postValue(result.list.take(5))
+                result.list.firstOrNull()?.let { updateDetailList(it) }
+                dayHourlyForecast.postValue(result.list.take(8))
                 hourlyWeatherForecast.postValue(result)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun updateHourlyAndDetails(dayOfWeek:String){
+        dayHourlyForecast.postValue(hourlyWeatherForecast.value?.list?.filter { getDay(it.dt) == dayOfWeek })
     }
 
     private fun generateDailyList(weatherFor5Days: WeatherForecastFor5Days){
@@ -62,16 +66,18 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private  fun generateDetailList(weatherFor5Days: WeatherForecastFor5Days){
+    fun updateDetailList(weatherHourForecast: WeatherHourForecast){
         val details = mutableListOf<Pair<String,String>>()
-        details.add(Pair("Sunrise",getHour(weatherFor5Days.city.sunrise)))
-        details.add(Pair("Sunset",getHour(weatherFor5Days.city.sunset)))
-        details.add(Pair("Feels like",weatherFor5Days.list[0].main.feels_like.toInt().toString() + "°"))
-        details.add(Pair("Humidity",weatherFor5Days.list[0].main.humidity.toString() + "%"))
-        details.add(Pair("Wind",weatherFor5Days.list[0].wind.speed.toString() + " m/s"))
+        details.add(Pair("Feels like",weatherHourForecast.main.feels_like.toInt().toString() + "°"))
+        details.add(Pair("Humidity",weatherHourForecast.main.humidity.toString() + "%"))
+        details.add(Pair("Wind",weatherHourForecast.wind.speed.toString() + " m/s"))
+        details.add(Pair("Sunrise", hourlyWeatherForecast.value?.city?.sunrise?.let { getHour(it) }) as Pair<String, String>)
+        details.add(Pair("Sunset", hourlyWeatherForecast.value?.city?.sunset?.let { getHour(it) }) as Pair<String, String>)
 
         detailsList.postValue(details)
     }
+
+
 
     private fun getDay(timeStamp: Int):String  = SimpleDateFormat("EEE").format(Date(timeStamp.toLong()*1000))
     private fun getHour(timeStamp: Int):String  = SimpleDateFormat("HH:mm").format(Date(timeStamp.toLong()*1000))
