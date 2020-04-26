@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
+import com.kucharski.michal.weatheracc.getHourAndMinutes
 import com.kucharski.michal.weatheracc.models.WeatherHourForecast
 import kotlinx.android.synthetic.main.item_daily_forecast.view.*
 import kotlinx.android.synthetic.main.item_hour_forecast.view.*
@@ -37,9 +38,9 @@ class HourlyWeatherAdapter (private val listener: (WeatherHourForecast) -> Unit
     class HourlyWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(forecast: WeatherHourForecast, listener: (WeatherHourForecast) -> Unit) {
             itemView.apply {
-                tvHour.text = SimpleDateFormat("HH:mm").format(Date(forecast.dt.toLong()*1000))
+                tvHour.text = getHourAndMinutes(forecast.dt)
                 tvDescription.text = forecast.weather.firstOrNull()?.description
-                tvHourTemperature.text = forecast.main.temp.toInt().toString() + "°"
+                tvHourTemperature.text = "${forecast.main.temp.toInt()}°"
             }
         }
     }

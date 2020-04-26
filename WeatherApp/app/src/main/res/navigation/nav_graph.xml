@@ -10,7 +10,7 @@
         android:id="@+id/splashFragment"
         android:name="com.kucharski.michal.weatheracc.ui.fragment.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/main_fragment">
+        tools:layout="@layout/splash_fragment">
         <action
             android:id="@+id/action_splashFragment_to_forecastListFragment"
             app:destination="@id/forecastListFragment"

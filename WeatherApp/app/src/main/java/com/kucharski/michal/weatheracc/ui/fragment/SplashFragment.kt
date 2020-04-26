@@ -22,7 +22,7 @@ class SplashFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.splash_fragment, container, false)
             .apply {
                 viewModel.proceed.observe(viewLifecycleOwner, Observer {
                     findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToForecastListFragment())
