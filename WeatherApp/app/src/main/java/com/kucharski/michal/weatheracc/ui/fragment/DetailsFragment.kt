@@ -62,9 +62,9 @@ class DetailsFragment : DaggerFragment() {
             rvWeeklyForecast.adapter = weeklyWeatherAdapter
             rvHourlyForecast.adapter = hourlyWeatherAdapter
             rvDetails.adapter = detailsAdapter
-            tvTemperature.text = "${args.currentTemperature}°"
+            tvTemperature.text = "${args.weatherForecast.main.temp.toInt()}°"
 
-            when (args.currentWeatherDescription) {
+            when (args.weatherForecast.weather.firstOrNull()?.description) {
                 "clear sky" -> {
                     ivBackground.setImageResource(R.drawable.ic_details_sunny_background)
                     ivCorner.setImageResource(R.drawable.ic_orange_corner_sun)
@@ -94,7 +94,7 @@ class DetailsFragment : DaggerFragment() {
             }
 
             with(viewModel) {
-                searchCity(args.cityId)
+                searchCity(args.weatherForecast.id)
                 hourlyWeatherForecast.observe(viewLifecycleOwner, Observer {
                     it.list.firstOrNull()?.let { weatherHourForecast ->
                         updateDetailList(weatherHourForecast)
@@ -127,9 +127,9 @@ class DetailsFragment : DaggerFragment() {
 
     private fun createDescription(maxTemp: Int?, minTemp: Int?): String {
         var prefix = ""
-        if (args.currentWeatherDescription != null) prefix =
-            args.currentWeatherDescription + " currently."
-
+        args.weatherForecast.weather.firstOrNull()?.description.let {
+            prefix = "$it currently. "
+        }
         return "${prefix.capitalize()} The high will be $maxTemp°. The low will be  $minTemp°. "
     }
 

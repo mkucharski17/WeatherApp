@@ -43,14 +43,7 @@
         android:label="details_fragment"
         tools:layout="@layout/details_fragment" >
         <argument
-            android:name="cityId"
-            app:argType="long" />
-        <argument
-            android:name="currentWeatherDescription"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="currentTemperature"
-            app:argType="integer" />
+            android:name="weatherForecast"
+            app:argType="com.kucharski.michal.weatheracc.models.WeatherForecast" />
     </fragment>
 </navigation>

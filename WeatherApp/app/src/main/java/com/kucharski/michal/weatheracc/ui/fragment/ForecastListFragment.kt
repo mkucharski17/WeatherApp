@@ -29,11 +29,7 @@ class ForecastListFragment : DaggerFragment() {
     private val citiesAdapter by lazy {
         CitiesAdapter {
             findNavController().navigate(
-                ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment(
-                    it.id,
-                    it.weather.firstOrNull()?.description,
-                    it.main.temp.toInt()
-                )
+                ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment(it)
             )
         }
     }
