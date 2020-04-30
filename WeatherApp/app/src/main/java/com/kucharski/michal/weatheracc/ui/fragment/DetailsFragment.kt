@@ -64,32 +64,35 @@ class DetailsFragment : DaggerFragment() {
             rvDetails.adapter = detailsAdapter
             tvTemperature.text = "${args.weatherForecast.main.temp.toInt()}°"
 
-            when (args.weatherForecast.weather.firstOrNull()?.description) {
-                "clear sky" -> {
-                    ivBackground.setImageResource(R.drawable.ic_details_sunny_background)
-                    ivCorner.setImageResource(R.drawable.ic_orange_corner_sun)
-                }
-                "rain" -> {
-                    ivBackground.setImageResource(R.drawable.ic_details_rainy_background)
-                    ivCorner.setImageResource(R.drawable.image_clouds)
-                    ivRain.setImageResource(R.drawable.image_rain)
-                }
-                "mist" -> {
-                    ivBackground.setImageResource(R.drawable.ic_details_foggy_background)
-                }
-                "thunderstorm" -> {
-                    ivCorner.setImageResource(R.drawable.image_clouds)
-                    ivBackground.setImageResource(R.drawable.ic_details_thunder_background)
-                    ivRain.setImageResource(R.drawable.image_rain)
-                    ivThunder.setImageResource(R.drawable.image_thunder)
-                }
-                "snow" -> {
-                    ivBackground.setImageResource(R.drawable.ic_details_snowy_background)
-                    ivCorner.setImageResource(R.drawable.image_snow)
-                }
-                else -> {
-                    ivBackground.setImageResource(R.drawable.ic_details_few_clouds_backgorund)
-                    ivCorner.setImageResource(R.drawable.ic_corner_light_sun)
+            args.weatherForecast.weather.firstOrNull()?.let {
+                when (it.description) {
+
+                    "clear sky" -> {
+                        ivBackground.setImageResource(R.drawable.ic_details_sunny_background)
+                        ivCorner.setImageResource(R.drawable.ic_orange_corner_sun)
+                    }
+                    "rain" -> {
+                        ivBackground.setImageResource(R.drawable.ic_details_rainy_background)
+                        ivCorner.setImageResource(R.drawable.image_clouds)
+                        ivRain.setImageResource(R.drawable.image_rain)
+                    }
+                    "mist" -> {
+                        ivBackground.setImageResource(R.drawable.ic_details_foggy_background)
+                    }
+                    "thunderstorm" -> {
+                        ivCorner.setImageResource(R.drawable.image_clouds)
+                        ivBackground.setImageResource(R.drawable.ic_details_thunder_background)
+                        ivRain.setImageResource(R.drawable.image_rain)
+                        ivThunder.setImageResource(R.drawable.image_thunder)
+                    }
+                    "snow" -> {
+                        ivBackground.setImageResource(R.drawable.ic_details_snowy_background)
+                        ivCorner.setImageResource(R.drawable.image_snow)
+                    }
+                    else -> {
+                        ivBackground.setImageResource(R.drawable.ic_details_few_clouds_backgorund)
+                        ivCorner.setImageResource(R.drawable.ic_corner_light_sun)
+                    }
                 }
             }
 

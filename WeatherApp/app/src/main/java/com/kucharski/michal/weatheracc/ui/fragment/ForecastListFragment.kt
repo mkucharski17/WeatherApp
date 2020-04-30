@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.CitiesAdapter
 import com.kucharski.michal.weatheracc.models.Units
+import com.kucharski.michal.weatheracc.models.WeatherForecast
 import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.forecast_list_fragment.view.*
@@ -27,9 +28,12 @@ class ForecastListFragment : DaggerFragment() {
     private val viewModel by viewModels<ForecastListViewModel> { factory }
 
     private val citiesAdapter by lazy {
-        CitiesAdapter {
+        CitiesAdapter { weatherForecast: WeatherForecast, delete: Boolean ->
+            if(delete)
+                viewModel.removeCity(weatherForecast)
+            else
             findNavController().navigate(
-                ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment(it)
+                ForecastListFragmentDirections.actionForecastListFragmentToDetailsFragment(weatherForecast)
             )
         }
     }
@@ -41,12 +45,11 @@ class ForecastListFragment : DaggerFragment() {
     ): View? {
         return inflater.inflate(R.layout.forecast_list_fragment, container, false).apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {}
+            rvCities.adapter = citiesAdapter
 
             textSwitcher.setOnClickListener {
                 viewModel.updateUnits()
             }
-
-            rvCities.adapter = citiesAdapter
             addButton.setOnClickListener {
                 findNavController().navigate(
                     ForecastListFragmentDirections.actionForecastListFragmentToSearchCityFragment()
@@ -54,14 +57,14 @@ class ForecastListFragment : DaggerFragment() {
             }
 
             with(viewModel) {
-
                 weatherList.observe(viewLifecycleOwner, Observer {
                     if (it.isNotEmpty()) {
                         citiesAdapter.submitList(it)
                         forecastListBackgroundLayout.visibility = View.GONE
-                    } else forecastListBackgroundLayout.visibility = View.VISIBLE
-
-
+                    } else {
+                        citiesAdapter.submitList(it)
+                        forecastListBackgroundLayout.visibility = View.VISIBLE
+                    }
                 })
                 units.observe(viewLifecycleOwner, Observer {
                     textSwitcher.setText(getString(if (it == Units.METRIC) R.string.units_metric else R.string.units_imperial))

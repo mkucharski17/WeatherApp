@@ -34,4 +34,5 @@ class Repository(
 
 
     suspend fun storeCity(weatherForecast: WeatherForecast) = weatherForecastDao.insert(weatherForecast)
+    suspend fun removeCity(weatherForecast: WeatherForecast) = weatherForecastDao.delete(weatherForecast)
 }

@@ -44,6 +44,7 @@ class ForecastListViewModel @Inject constructor(
         units.value = sharedPreferences.getUnits()
     }
 
+
     fun updateUnits() {
         val currentUnits = sharedPreferences.getUnits()
         val newUnits = if (currentUnits == Units.METRIC) Units.IMPERIAL
@@ -58,6 +59,16 @@ class ForecastListViewModel @Inject constructor(
                     e.printStackTrace()
                 }
             }
+        }
+    }
+
+    fun removeCity(weatherForecast: WeatherForecast){
+        val list = weatherList.value?.toMutableList()
+        list?.remove(weatherForecast)
+        weatherList.postValue(list)
+
+        viewModelScope.launch {
+            repository.removeCity(weatherForecast)
         }
     }
 }
