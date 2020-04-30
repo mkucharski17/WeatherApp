@@ -1,5 +1,10 @@
-package com.kucharski.michal.weatheracc
+package com.kucharski.michal.weatheracc.utils
 
+import android.app.Activity
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,7 +20,9 @@ fun getDayOfWeek(timeStamp: Int): String =
 fun getHourMinutesMonthDay(timeZone: Int): String {
     val formatter = SimpleDateFormat("HH:mm MMM d", Locale.US)
     val formattedDate = formatter.format(Date(Date().time + timeZone * 1000))
-    return formattedDate + addDateEnd(formattedDate.takeLast(2).toInt())
+    return formattedDate + addDateEnd(
+        formattedDate.takeLast(2).toInt()
+    )
 }
 
 fun addDateEnd(day: Int): String {
@@ -27,4 +34,5 @@ fun addDateEnd(day: Int): String {
         else -> "th"
     }
 }
+
 

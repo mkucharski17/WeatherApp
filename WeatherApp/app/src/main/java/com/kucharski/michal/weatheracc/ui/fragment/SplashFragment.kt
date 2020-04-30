@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.viewModels.SplashViewModel
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.splash_fragment.view.*
 import javax.inject.Inject
 
 class SplashFragment : DaggerFragment() {
@@ -25,7 +26,10 @@ class SplashFragment : DaggerFragment() {
         return inflater.inflate(R.layout.splash_fragment, container, false)
             .apply {
                 viewModel.proceed.observe(viewLifecycleOwner, Observer {
+
                     findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToForecastListFragment())
+
+
 
                 })
             }

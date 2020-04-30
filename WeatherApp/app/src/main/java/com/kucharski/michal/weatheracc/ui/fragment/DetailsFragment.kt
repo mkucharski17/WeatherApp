@@ -13,8 +13,8 @@ import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.DetailsAdapter
 import com.kucharski.michal.weatheracc.adapters.HourlyWeatherAdapter
 import com.kucharski.michal.weatheracc.adapters.WeeklyWeatherAdapter
-import com.kucharski.michal.weatheracc.getDayOfWeek
-import com.kucharski.michal.weatheracc.getHourMinutesMonthDay
+import com.kucharski.michal.weatheracc.utils.getDayOfWeek
+import com.kucharski.michal.weatheracc.utils.getHourMinutesMonthDay
 import com.kucharski.michal.weatheracc.models.WeatherHourForecast
 import com.kucharski.michal.weatheracc.viewModels.DetailsViewModel
 import dagger.android.support.DaggerFragment
@@ -101,15 +101,30 @@ class DetailsFragment : DaggerFragment() {
                 hourlyWeatherForecast.observe(viewLifecycleOwner, Observer {
                     it.list.firstOrNull()?.let { weatherHourForecast ->
                         updateDetailList(weatherHourForecast)
-                        viewModel.updateDayHourlyForecast(getDayOfWeek(weatherHourForecast.dt))
+                        viewModel.updateDayHourlyForecast(
+                            getDayOfWeek(
+                                weatherHourForecast.dt
+                            )
+                        )
                     }
 
-                    tvTime.text = getHourMinutesMonthDay(it.city.timezone)
+                    tvTime.text =
+                        getHourMinutesMonthDay(
+                            it.city.timezone
+                        )
                     tvCityName.text = "${it.city.name} ${it.city.country}"
 
                     tvDescription.text = createDescription(
-                        viewModel.findMaxTemp(getDayOfWeek(Date().time.toInt())),
-                        viewModel.findMinTemp(getDayOfWeek(Date().time.toInt()))
+                        viewModel.findMaxTemp(
+                            getDayOfWeek(
+                                Date().time.toInt()
+                            )
+                        ),
+                        viewModel.findMinTemp(
+                            getDayOfWeek(
+                                Date().time.toInt()
+                            )
+                        )
                     )
 
                 })

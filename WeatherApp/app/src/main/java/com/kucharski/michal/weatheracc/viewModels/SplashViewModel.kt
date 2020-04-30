@@ -25,8 +25,9 @@ class SplashViewModel @Inject constructor(
             val fetchDone = async {
                 try {
                     val list = repository.getWeatherList().map { it.id }
-                    if (list.isNotEmpty())
+                    if (list.isNotEmpty()) {
                         repository.fetchWeatherByCityIdList(list, sharedPreferences.getUnits())
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

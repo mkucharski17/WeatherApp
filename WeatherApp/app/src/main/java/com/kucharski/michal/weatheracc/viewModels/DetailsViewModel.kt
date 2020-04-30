@@ -4,14 +4,13 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kucharski.michal.weatheracc.getDayOfWeek
-import com.kucharski.michal.weatheracc.getHourAndMinutes
+import com.kucharski.michal.weatheracc.utils.getDayOfWeek
+import com.kucharski.michal.weatheracc.utils.getHourAndMinutes
 import com.kucharski.michal.weatheracc.models.WeatherForecastFor5Days
 import com.kucharski.michal.weatheracc.models.WeatherHourForecast
 import com.kucharski.michal.weatheracc.repository.Repository
 import com.kucharski.michal.weatheracc.repository.local.getUnits
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(
@@ -37,7 +36,9 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun updateDayHourlyForecast(dayOfWeek: String) =
-        dayHourlyForecast.postValue(hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(it.dt) == dayOfWeek })
+        dayHourlyForecast.postValue(hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(
+            it.dt
+        ) == dayOfWeek })
 
 
     private fun generateDailyList(weatherFor5Days: WeatherForecastFor5Days) {
@@ -46,9 +47,13 @@ class DetailsViewModel @Inject constructor(
             val daily = mutableListOf<WeatherHourForecast>()
             var maxDayTempForecast = it[0]
             for (i in 0..it.lastIndex) {
-                val day = getDayOfWeek(it[i].dt)
+                val day =
+                    getDayOfWeek(it[i].dt)
 
-                if (day == getDayOfWeek(maxDayTempForecast.dt)) {
+                if (day == getDayOfWeek(
+                        maxDayTempForecast.dt
+                    )
+                ) {
                     if (it[i].main.temp > maxDayTempForecast.main.temp)
                         maxDayTempForecast = it[i]
                 } else {
@@ -61,12 +66,16 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun findMinTemp(dayOfWeek: String) =
-        hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(it.dt) == dayOfWeek }
+        hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(
+            it.dt
+        ) == dayOfWeek }
             ?.map { it.main.temp }?.min()?.toInt()
 
 
     fun findMaxTemp(dayOfWeek: String) =
-        hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(it.dt) == dayOfWeek }
+        hourlyWeatherForecast.value?.list?.filter { getDayOfWeek(
+            it.dt
+        ) == dayOfWeek }
             ?.map { it.main.temp }?.max()?.toInt()
 
 
@@ -83,12 +92,20 @@ class DetailsViewModel @Inject constructor(
         details.add(
             Pair(
                 "Sunrise",
-                hourlyWeatherForecast.value?.city?.sunrise?.let { getHourAndMinutes(it) }) as Pair<String, String>
+                hourlyWeatherForecast.value?.city?.sunrise?.let {
+                    getHourAndMinutes(
+                        it
+                    )
+                }) as Pair<String, String>
         )
         details.add(
             Pair(
                 "Sunset",
-                hourlyWeatherForecast.value?.city?.sunset?.let { getHourAndMinutes(it) }) as Pair<String, String>
+                hourlyWeatherForecast.value?.city?.sunset?.let {
+                    getHourAndMinutes(
+                        it
+                    )
+                }) as Pair<String, String>
         )
         detailsList.postValue(details)
     }

@@ -41,6 +41,7 @@ class ForecastListViewModel @Inject constructor(
                 weatherList.value = it
             }
             .launchIn(viewModelScope)
+
         units.value = sharedPreferences.getUnits()
     }
 

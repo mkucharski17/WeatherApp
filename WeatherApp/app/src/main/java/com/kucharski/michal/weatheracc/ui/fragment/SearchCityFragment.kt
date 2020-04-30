@@ -1,13 +1,10 @@
 package com.kucharski.michal.weatheracc.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SearchCityAdapter
+import com.kucharski.michal.weatheracc.utils.hideKeyboard
 import com.kucharski.michal.weatheracc.viewModels.SearchCityViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
@@ -29,6 +27,7 @@ class SearchCityFragment : DaggerFragment() {
     private val searchListAdapter by lazy {
         SearchCityAdapter {
             viewModel.storeCity(it)
+            hideKeyboard()
             findNavController().popBackStack()
         }
     }

@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
-import com.kucharski.michal.weatheracc.getDateMonthYear
+import com.kucharski.michal.weatheracc.utils.getDateMonthYear
 import com.kucharski.michal.weatheracc.models.WeatherForecast
-import kotlinx.android.synthetic.main.details_fragment.view.*
 import kotlinx.android.synthetic.main.item_saved_city.view.*
 import kotlinx.android.synthetic.main.item_saved_city.view.tvCityName
 
@@ -63,7 +62,8 @@ class CitiesAdapter(
                     }
                 }
                 tvCityName.text = city.name
-                tvDate.text = getDateMonthYear(city.dt)
+                tvDate.text =
+                    getDateMonthYear(city.dt)
                 tvMaxMinTemp.text = "${city.main.temp_max.toInt()}° / ${city.main.temp_min.toInt()}°"
 
                 setOnClickListener {listener(city,false) }
