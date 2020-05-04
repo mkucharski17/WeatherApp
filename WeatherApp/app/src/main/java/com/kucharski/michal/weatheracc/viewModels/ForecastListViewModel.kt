@@ -10,6 +10,7 @@ import com.kucharski.michal.weatheracc.models.WeatherForecast
 import com.kucharski.michal.weatheracc.repository.Repository
 import com.kucharski.michal.weatheracc.repository.local.getUnits
 import com.kucharski.michal.weatheracc.repository.local.setUnits
+import kotlinx.android.synthetic.main.forecast_list_fragment.view.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
