@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">WeatherAcc</string>
     <string name="landing_text">Hello Weather</string>
-    <string name="welcome_to">Welcome to</string>
-    <string name="App_name">WEATHER APP</string>
+    <string name="welcome_to">Welcome to \n<b>WEATHER APP</b></string>
+    <string name="App_name"></string>
     <string name="addLocationText">To add your\nfirst location\n<b>click +</b></string>
     <string name="textview">TextView</string>
-    <string name="degresSymbols"><b>°C /</b> °F</string>
+    <string name="send">SEND</string>
+    <string name="city_name">City name</string>
+    <string name="units_metric" translatable="false">°C</string>
+    <string name="units_imperial" translatable="false">°F</string>
+    <string name="type_minimum_3_characters">Type minimum 3 characters</string>
 
 </resources>

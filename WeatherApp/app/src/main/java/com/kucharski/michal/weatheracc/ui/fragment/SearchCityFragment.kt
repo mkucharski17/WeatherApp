@@ -4,127 +4,93 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.kucharski.michal.weatheracc.R
 import com.kucharski.michal.weatheracc.adapters.SearchCityAdapter
-import com.kucharski.michal.weatheracc.models.SearchCityModel
-import com.kucharski.michal.weatheracc.viewModels.ForecastListViewModel
+import com.kucharski.michal.weatheracc.utils.hideKeyboard
+import com.kucharski.michal.weatheracc.viewModels.SearchCityViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_city_fragment.view.*
 import javax.inject.Inject
 
-
 class SearchCityFragment : DaggerFragment() {
+
     @Inject
     lateinit var factory: ViewModelProvider.Factory
+    private val viewModel by viewModels<SearchCityViewModel> { factory }
 
-    private val viewModel by viewModels<ForecastListViewModel> { factory }
-    private val citiesAdapter by lazy {
+    private val searchListAdapter by lazy {
         SearchCityAdapter {
-            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+            viewModel.storeCity(it)
+            hideKeyboard()
+            findNavController().popBackStack()
         }
     }
-    private val citiesList = mutableListOf(
-        SearchCityModel(
-            "1",
-            "Warszawa",
-            "Poland"
-        ),
-        SearchCityModel(
-            "2",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "3",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "4",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "5",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "6",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "7",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "8",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "9",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "10",
-            "Warszawa",
-            "Poland"
-        ),
-        SearchCityModel(
-            "11",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "12",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "13",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "14",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "15",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "16",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "17",
-            "Warszawa",
-            "Poland"
-        ), SearchCityModel(
-            "18",
-            "Warszawa",
-            "Poland"
-        )
-
-    )
-
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = inflater.inflate(R.layout.search_city_fragment, container, false)
+        return inflater.inflate(R.layout.search_city_fragment, container, false)
+            .apply {
+                ivBackArrow.setOnClickListener {
+                    findNavController().popBackStack()
+                }
+                svSearchCity.let {
+                    it.setOnClickListener {
+                        svSearchCity.isIconified = false
+                    }
+                    it.setOnQueryTextListener((object : SearchView.OnQueryTextListener {
 
-        rootView.rvSearch.adapter = citiesAdapter.apply {
-            submitList(citiesList)
-        }
+                        override fun onQueryTextChange(newText: String): Boolean {
+                            if (svSearchCity.query.length <= 3)
+                                tvEmptyList.text = "Type minimum 3 characters"
+                            viewModel.searchCity(svSearchCity.query.toString())
+                            return false
+                        }
 
-        return rootView
+                        override fun onQueryTextSubmit(query: String): Boolean {
+                            onQueryTextChange(query)
+                            return false
+                        }
+                    }))
+                }
+
+                rvCitySearch.adapter = searchListAdapter
+
+                with(viewModel) {
+                    cityList.observe(viewLifecycleOwner, Observer {
+                        if (it.isNotEmpty()) {
+                            searchListAdapter.submitList(it)
+                            handleVisibility(tvEmptyList, rvCitySearch, false)
+                        } else {
+                            tvEmptyList.text = "No found"
+                            handleVisibility(tvEmptyList, rvCitySearch, true)
+                        }
+                    })
+                    errorMessage.observe(viewLifecycleOwner, Observer {
+                        if (svSearchCity.query.length >= 3) {
+                            tvEmptyList.text = it
+                            handleVisibility(tvEmptyList, rvCitySearch, true)
+                        }
+                    })
+                }
+            }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-        // TODO: Use the ViewModel
-
+    private fun handleVisibility(
+        textView: View,
+        recyclerView: RecyclerView,
+        shouldShowError: Boolean
+    ) {
+        textView.visibility = if (shouldShowError) View.VISIBLE else View.GONE
+        recyclerView.visibility = if (shouldShowError) View.GONE else View.VISIBLE
     }
-
 
 }
