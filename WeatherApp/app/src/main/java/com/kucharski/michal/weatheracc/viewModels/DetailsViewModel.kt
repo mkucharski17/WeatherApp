@@ -87,8 +87,9 @@ class DetailsViewModel @Inject constructor(
                 weatherHourForecast.main.feels_like.toInt().toString() + "°"
             )
         )
-        details.add(Pair("Humidity", weatherHourForecast.main.humidity.toString() + "%"))
-        details.add(Pair("Wind", weatherHourForecast.wind.speed.toString() + " m/s"))
+        details.add(Pair("Humidity", "${weatherHourForecast.main.humidity} %"))
+        details.add(Pair("Wind", "${weatherHourForecast.wind.speed}  m/s"))
+        details.add(Pair("Pressure", "${weatherHourForecast.main.pressure} hPa"))
         details.add(
             Pair(
                 "Sunrise",
@@ -107,6 +108,7 @@ class DetailsViewModel @Inject constructor(
                     )
                 }) as Pair<String, String>
         )
+
         detailsList.postValue(details)
     }
 }

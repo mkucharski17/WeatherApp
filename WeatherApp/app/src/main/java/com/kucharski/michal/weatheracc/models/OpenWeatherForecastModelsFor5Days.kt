@@ -46,11 +46,6 @@ data class WeatherFor5DaysMain (
     @SerializedName("temp_kf") val temp_kf : Double
 )
 
-data class Rain (
-
-    @SerializedName("3h") val rain : Double
-)
-
 data class WeatherFor5DaysSys (
 
     @SerializedName("pod") val pod : String
